@@ -2,9 +2,16 @@ const path = require("path");
 const webpack = require("webpack");
 const { execSync } = require("child_process");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-var currentCommitHash = execSync("git rev-parse HEAD", {
-  encoding: "utf-8",
-}).trim();
+// var currentCommitHash = execSync("git rev-parse HEAD", {
+//   encoding: "utf-8",
+// }).trim();
+
+let currentCommitHash = 'unknown';
+try {
+  currentCommitHash = execSync('git rev-parse HEAD').toString().trim();
+} catch (e) {
+  console.warn('Git not available, using "unknown" commit hash');
+}
 
 module.exports = {
   mode: "development",
