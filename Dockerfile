@@ -2,14 +2,14 @@
 FROM node:18 AS base
 WORKDIR /usr/src/app
 COPY . .
+# Устанавливаем jq, удаляем postinstall из package.json
+RUN apt-get update && apt-get install -y jq \
+    && jq 'del(.scripts.postinstall)' package.json > package.tmp.json \
+    && mv package.tmp.json package.json
 
-# RUN npm i
-# RUN npm run build:prod
+RUN npm i
+RUN npm run build:prod
 
-# Отключаем скрипт postinstall
-RUN npm set-script postinstall "" \
-    && npm install \
-    && npm run build:prod
 
 
 FROM node:18-alpine
