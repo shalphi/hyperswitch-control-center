@@ -3,10 +3,13 @@ FROM node:18 AS base
 WORKDIR /usr/src/app
 COPY . .
 
-RUN npm i
-RUN npm run build:prod
+# RUN npm i
+# RUN npm run build:prod
 
-
+# Отключаем скрипт postinstall
+RUN npm set-script postinstall "" \
+    && npm install \
+    && npm run build:prod
 
 
 FROM node:18-alpine
