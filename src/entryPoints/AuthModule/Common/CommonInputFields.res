@@ -2,7 +2,7 @@ let emailField = FormRenderer.makeFieldInfo(
   ~label="Email",
   ~name="email",
   ~placeholder="Enter your Email",
-  ~isRequired=false,
+  ~isRequired=true,
   ~customInput=(~input, ~placeholder as _) =>
     InputFields.textInput(~autoComplete="off")(
       ~input={
@@ -98,5 +98,5 @@ let passwordField = FormRenderer.makeFieldInfo(
       <Icon name="password-lock" size=13 />
     },
   ),
-  ~isRequired=false,
+  ~isRequired=true,
 )
