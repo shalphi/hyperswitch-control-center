@@ -1,5 +1,6 @@
 let connectorsWithIntegrationSteps: array<ConnectorTypes.connectorTypes> = [
   Processors(ADYEN),
+  Processors(NOVA),
   Processors(CHECKOUT),
   Processors(STRIPE),
   Processors(PAYPAL),

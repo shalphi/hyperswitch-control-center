@@ -115,6 +115,7 @@ type processorTypes =
   | FLEXITI
   | BREADPAY
   | BLUECODE
+  | NOVA
 
 type payoutProcessorTypes =
   | ADYEN
@@ -131,7 +132,8 @@ type threeDsAuthenticatorTypes =
 
 type frmTypes =
   | Signifyd
-  | Riskifyed
+  | Riskified
+  | Riskified2
 
 type pmAuthenticationProcessorTypes = PLAID
 

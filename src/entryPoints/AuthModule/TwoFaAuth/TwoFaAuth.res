@@ -241,7 +241,7 @@ let make = (~setAuthStatus, ~authType, ~setAuthType) => {
   | ForgetPassword
   | ResendVerifyEmail
   | LoginWithEmail => ["email"]
-  | SignUP => ["email", "password"]
+  | SignUP => featureFlagValues.email ? ["email"] : ["email", "password"]
   | LoginWithPassword => ["email"]
   | ResetPassword => ["create_password", "comfirm_password"]
   | _ => []
@@ -274,7 +274,15 @@ let make = (~setAuthStatus, ~authType, ~setAuthType) => {
               <EmailForm />
             </RenderIf>
           | ResendVerifyEmail
-          | SignUP => <EmailPasswordForm />
+          | SignUP =>
+            <>
+              <RenderIf condition={signUpAllowed && signupMethod === SSOTypes.MAGIC_LINK}>
+                <EmailForm />
+              </RenderIf>
+              <RenderIf condition={signUpAllowed && signupMethod == SSOTypes.PASSWORD}>
+                <EmailPasswordForm />
+              </RenderIf>
+            </>
 
           | LoginWithEmail => isMagicLinkEnabled() ? <EmailForm /> : <EmailPasswordForm />
           | ResetPassword => <ResetPasswordForm />

@@ -48,6 +48,7 @@ let connectorList: array<connectorTypes> = [
   Processors(PAYPAL),
   Processors(ACI),
   Processors(ADYEN),
+  Processors(NOVA),
   Processors(AIRWALLEX),
   Processors(AUTHORIZEDOTNET),
   Processors(BANKOFAMERICA),
@@ -241,6 +242,10 @@ let adyenInfo = {
 
 let adyenPlatformInfo = {
   description: "Send payout to third parties with Adyen's Balance Platform!",
+}
+
+let novaInfo = {
+  description: "Global processor supporting cards and local payment methods.",
 }
 
 let checkoutInfo = {
@@ -624,7 +629,26 @@ let signifydInfo = {
   ],
 }
 
-let riskifyedInfo = {
+let riskifiedInfo = {
+  description: "Frictionless fraud management for eCommerce",
+  validate: [
+    {
+      placeholder: "Enter Secret token",
+      label: "Secret token",
+      name: "connector_account_details.api_key",
+      isRequired: true,
+      encodeToBase64: false,
+    },
+    {
+      placeholder: "Enter Domain name",
+      label: "Domain name",
+      name: "connector_account_details.key1",
+      isRequired: true,
+      encodeToBase64: false,
+    },
+  ],
+}
+let riskified2Info = {
   description: "Frictionless fraud management for eCommerce",
   validate: [
     {
@@ -673,6 +697,7 @@ let bluecodeInfo = {
 let getConnectorNameString = (connector: processorTypes) =>
   switch connector {
   | ADYEN => "adyen"
+  | NOVA => "nova"
   | CHECKOUT => "checkout"
   | BRAINTREE => "braintree"
   | AUTHORIZEDOTNET => "authorizedotnet"
@@ -786,7 +811,8 @@ let getThreeDsAuthenticatorNameString = (threeDsAuthenticator: threeDsAuthentica
 let getFRMNameString = (frm: frmTypes) => {
   switch frm {
   | Signifyd => "signifyd"
-  | Riskifyed => "riskified"
+  | Riskified => "riskified"
+  | Riskified2 => "riskified2"
   }
 }
 
@@ -831,6 +857,7 @@ let getConnectorNameTypeFromString = (connector, ~connectorType=ConnectorTypes.P
   | Processor =>
     switch connector {
     | "adyen" => Processors(ADYEN)
+    | "nova" => Processors(NOVA)
     | "checkout" => Processors(CHECKOUT)
     | "braintree" => Processors(BRAINTREE)
     | "authorizedotnet" => Processors(AUTHORIZEDOTNET)
@@ -943,7 +970,8 @@ let getConnectorNameTypeFromString = (connector, ~connectorType=ConnectorTypes.P
     }
   | FRMPlayer =>
     switch connector {
-    | "riskified" => FRM(Riskifyed)
+    | "riskified" => FRM(Riskified)
+    | "riskified2" => FRM(Riskified2)
     | "signifyd" => FRM(Signifyd)
     | _ => UnknownConnector("Not known")
     }
@@ -970,6 +998,7 @@ let getProcessorInfo = (connector: ConnectorTypes.processorTypes) => {
   switch connector {
   | STRIPE => stripeInfo
   | ADYEN => adyenInfo
+  | NOVA => novaInfo
   | GOCARDLESS => goCardLessInfo
   | CHECKOUT => checkoutInfo
   | BRAINTREE => braintreeInfo
@@ -1083,7 +1112,8 @@ let getThreedsAuthenticatorInfo = threeDsAuthenticator =>
 let getFrmInfo = frm =>
   switch frm {
   | Signifyd => signifydInfo
-  | Riskifyed => riskifyedInfo
+  | Riskified => riskifiedInfo
+  | Riskified2 => riskified2Info
   }
 
 let getOpenBankingProcessorInfo = (
@@ -1879,6 +1909,7 @@ let getConnectorPaymentMethodDetails = async (
 let getDisplayNameForProcessor = (connector: ConnectorTypes.processorTypes) =>
   switch connector {
   | ADYEN => "Adyen"
+  | NOVA => "Nova"
   | CHECKOUT => "Checkout"
   | BRAINTREE => "Braintree"
   | BILLWERK => "Billwerk"
@@ -1992,7 +2023,8 @@ let getDisplayNameForThreedsAuthenticator = threeDsAuthenticator =>
 let getDisplayNameForFRMConnector = frmConnector =>
   switch frmConnector {
   | Signifyd => "Signifyd"
-  | Riskifyed => "Riskified"
+  | Riskified => "Riskified"
+  | Riskified2 => "AML Connector"
   }
 
 let getDisplayNameForOpenBankingProcessor = pmAuthenticationConnector => {

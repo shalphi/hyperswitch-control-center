@@ -102,6 +102,17 @@ module Render = {
           {React.string("Click on the top-right corner to find your Merchant ID.")}
         </div>
       </div>
+    | Processors(NOVA) =>
+      <div className="">
+        <ol className="list-decimal pl-4">
+          <li className="mb-8">
+            {React.string("In your Nova Dashboard, navigate to API credentials and generate keys.")}
+          </li>
+          <li className="mb-8">
+            {React.string("Copy the API key and Merchant Account ID and add them to the Hyperswitch dashboard under Nova.")}
+          </li>
+        </ol>
+      </div>
     | Processors(CHECKOUT) =>
       <div className="">
         <ol className="list-decimal pl-4">
